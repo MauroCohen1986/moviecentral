@@ -1,0 +1,21 @@
+import "google/protobuf/timestamp.proto";
+
+package ar.com.moviecentral.dtos;
+
+
+option java_package = "ar.com.moviecentral.dtos";
+option java_outer_classname = "Protos";
+
+message MovieDTO {
+    required int64 movieId = 1;
+    required string title = 2;
+    required google.protobuf.Timestamp date = 3;
+
+    message ActorDTO {
+        required int64 id = 1;
+        required string firstName = 2;
+        required string lastName = 3;
+    }
+    repeated ActorDTO actors = 4;
+}
+
