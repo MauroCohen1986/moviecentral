@@ -2,8 +2,9 @@ package ar.com.moviecentral.service;
 
 import ar.com.moviecentral.daos.ActorDAO;
 import ar.com.moviecentral.daos.MovieDAO;
-import ar.com.moviecentral.dtos.Protos.MovieDTO;
-import ar.com.moviecentral.dtos.Protos.MovieDTO.ActorDTO;
+import ar.com.moviecentral.dtos.Protos.MoviesDTOS;
+import ar.com.moviecentral.dtos.Protos.MoviesDTOS.MovieDTO;
+import ar.com.moviecentral.dtos.Protos.MoviesDTOS.MovieDTO.ActorDTO;
 import ar.com.moviecentral.exceptions.ActorNotFoundException;
 import ar.com.moviecentral.exceptions.MovieNotFoundException;
 import ar.com.moviecentral.mappers.MovieDTOMapper;
@@ -26,11 +27,13 @@ public class MovieService {
   @Autowired
   private ActorDAO actorDAO;
 
-  public Set<MovieDTO> findMoviesByActor(Long actorId){
-    return Sets.newHashSet(movieDAO.findAllById(movieDAO.getMoviesIdsByActors(actorId)))
+  public MoviesDTOS findMoviesByActor(Long actorId){
+    Set<MovieDTO> moviesDTOS = Sets
+        .newHashSet(movieDAO.findAllById(movieDAO.getMoviesIdsByActors(actorId)))
         .stream()
-        .map(movie-> MovieDTOMapper.map(movie)).collect(
-        Collectors.toSet());
+        .map(movie -> MovieDTOMapper.map(movie))
+        .collect(Collectors.toSet());
+    return MoviesDTOS.newBuilder().addAllMovies(moviesDTOS).build();
   }
 
   public MovieDTO createMovie(MovieDTO movieDTO){

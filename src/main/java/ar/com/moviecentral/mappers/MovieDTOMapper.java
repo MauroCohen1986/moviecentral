@@ -1,7 +1,7 @@
 package ar.com.moviecentral.mappers;
 
-import ar.com.moviecentral.dtos.Protos.MovieDTO;
-import ar.com.moviecentral.dtos.Protos.MovieDTO.ActorDTO;
+import ar.com.moviecentral.dtos.Protos.MoviesDTOS.MovieDTO;
+import ar.com.moviecentral.dtos.Protos.MoviesDTOS.MovieDTO.ActorDTO;
 import ar.com.moviecentral.model.Actor;
 import ar.com.moviecentral.model.Movie;
 import ar.com.moviecentral.utils.DateConverter;

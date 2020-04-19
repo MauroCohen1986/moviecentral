@@ -1,3 +1,4 @@
+syntax = "proto2";
 import "google/protobuf/timestamp.proto";
 
 package ar.com.moviecentral.dtos;
@@ -6,6 +7,7 @@ package ar.com.moviecentral.dtos;
 option java_package = "ar.com.moviecentral.dtos";
 option java_outer_classname = "Protos";
 
+message MoviesDTOS {
 message MovieDTO {
     required int64 movieId = 1;
     required string title = 2;
@@ -17,5 +19,7 @@ message MovieDTO {
         required string lastName = 3;
     }
     repeated ActorDTO actors = 4;
+}
+  repeated MovieDTO movies = 1;
 }
 
