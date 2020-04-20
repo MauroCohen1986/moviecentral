@@ -1,8 +1,12 @@
 package ar.com.moviecentral.model;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.neo4j.ogm.annotation.GeneratedValue;
@@ -12,6 +16,8 @@ import org.neo4j.ogm.annotation.Relationship;
 
 @NodeEntity
 @Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Movie {
 
@@ -22,7 +28,7 @@ public class Movie {
   private String title;
   private LocalDate date;
 
-  @Relationship(type = "ACTED_BY", direction = Relationship.UNDIRECTED)
+  @Relationship(type = "ACTED_BY", direction = Relationship.INCOMING)
   private Set<Actor> actors;
 
 

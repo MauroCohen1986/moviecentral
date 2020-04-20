@@ -2,18 +2,14 @@ package ar.com.moviecentral.service;
 
 import ar.com.moviecentral.daos.ActorDAO;
 import ar.com.moviecentral.daos.MovieDAO;
-import ar.com.moviecentral.dtos.Protos.MoviesDTOS;
-import ar.com.moviecentral.dtos.Protos.MoviesDTOS.MovieDTO;
-import ar.com.moviecentral.dtos.Protos.MoviesDTOS.MovieDTO.ActorDTO;
+import ar.com.moviecentral.dtos.ActorDTO;
+import ar.com.moviecentral.dtos.MovieDTO;
 import ar.com.moviecentral.exceptions.ActorNotFoundException;
 import ar.com.moviecentral.exceptions.MovieNotFoundException;
 import ar.com.moviecentral.mappers.MovieDTOMapper;
 import ar.com.moviecentral.model.Actor;
 import ar.com.moviecentral.model.Movie;
-import ar.com.moviecentral.utils.DateConverter;
-import com.google.common.collect.Sets;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,25 +18,23 @@ import org.springframework.stereotype.Service;
 public class MovieService {
 
   @Autowired
-  private MovieDAO movieDAO;
+  MovieDAO movieDAO;
 
   @Autowired
-  private ActorDAO actorDAO;
+  ActorDAO actorDAO;
 
-  public MoviesDTOS findMoviesByActor(Long actorId){
-    Set<MovieDTO> moviesDTOS = Sets
-        .newHashSet(movieDAO.findAllById(movieDAO.getMoviesIdsByActors(actorId)))
+  public List<MovieDTO> findMoviesByActor(Long actorId){
+    return movieDAO.getMoviesByActorId(actorId)
         .stream()
         .map(movie -> MovieDTOMapper.map(movie))
-        .collect(Collectors.toSet());
-    return MoviesDTOS.newBuilder().addAllMovies(moviesDTOS).build();
+        .collect(Collectors.toList());
   }
 
   public MovieDTO createMovie(MovieDTO movieDTO){
     Movie movie = new Movie();
-    movie.setDate(DateConverter.toLocalDate(movieDTO.getDate()));
+    movie.setDate(movieDTO.getDate());
     movie.setTitle(movieDTO.getTitle());
-    addActorsToMovie(movie,movieDTO.getActorsList());
+    addActorsToMovie(movie,movieDTO.getActors());
     return MovieDTOMapper.map(movieDAO.save(movie));
   }
 
@@ -61,7 +55,7 @@ public class MovieService {
 
   private Actor getActorFromDTO(ActorDTO actorDTO) {
     Actor actor;
-    if(actorDTO.hasId()){
+    if(actorDTO.getId()!=null){
       actor = actorDAO.findById(actorDTO.getId()).orElseThrow(()->new ActorNotFoundException());
     }else{
       actor = new Actor();
