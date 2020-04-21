@@ -19,3 +19,10 @@ java -jar target/movie-central-api-0.0.1-SNAPSHOT.jar
 ```
 
 
+Once you start the application you can enter to the swagger UI where you can find all the published services.
+
+```
+http://localhost:8080/moviecentral/swagger-ui.html#/
+```
+
+
