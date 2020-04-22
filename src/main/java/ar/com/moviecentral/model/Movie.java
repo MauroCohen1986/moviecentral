@@ -1,9 +1,7 @@
 package ar.com.moviecentral.model;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
